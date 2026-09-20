@@ -26,9 +26,9 @@ async function buildDashboard() {
                     detail: `Humidity ${weather.humidity}%  •  Wind ${weather.windSpeed} km/h`
                 }
                 : {
-                    icon: '🌡️',
-                    temperature: '--',
-                    condition: 'Weather unavailable',
+                    icon: '⚠️',
+                    temperature: '',
+                    condition: 'Weather API not working',
                     location: '',
                     detail: ''
                 },
