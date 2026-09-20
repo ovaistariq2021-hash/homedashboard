@@ -1,0 +1,178 @@
+{
+  "type": "APL",
+  "version": "2023.2",
+  "theme": "dark",
+  "resources": [
+    {
+      "colors": {
+        "textPrimary": "#FFFFFF",
+        "textMuted": "#D6DCE8"
+      }
+    }
+  ],
+  "mainTemplate": {
+    "parameters": ["payload"],
+    "items": [
+      {
+        "type": "Container",
+        "width": "100%",
+        "height": "100%",
+        "items": [
+          {
+            "type": "Video",
+            "id": "bgVideo",
+            "width": "100%",
+            "height": "100%",
+            "position": "absolute",
+            "scale": "best-fill",
+            "autoplay": true,
+            "audioTrack": "none",
+            "source": [
+              {
+                "url": "${payload.dashboard.backgroundVideo}",
+                "repeatCount": -1
+              }
+            ]
+          },
+          {
+            "type": "Frame",
+            "width": "100%",
+            "height": "34%",
+            "position": "absolute",
+            "bottom": "0",
+            "background": "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.72) 100%)"
+          },
+          {
+            "type": "Container",
+            "width": "100%",
+            "height": "100%",
+            "position": "absolute",
+            "paddingLeft": "48dp",
+            "paddingRight": "48dp",
+            "paddingBottom": "36dp",
+            "justifyContent": "end",
+            "onMount": [
+              {
+                "type": "SendEvent",
+                "arguments": ["refresh"],
+                "delay": "${payload.dashboard.nextPollMs}"
+              }
+            ],
+            "items": [
+              {
+                "type": "Container",
+                "direction": "row",
+                "justifyContent": "spaceBetween",
+                "alignItems": "end",
+                "width": "100%",
+                "items": [
+                  {
+                    "type": "Container",
+                    "items": [
+                      {
+                        "type": "Container",
+                        "direction": "row",
+                        "alignItems": "baseline",
+                        "paddingBottom": "14dp",
+                        "items": [
+                          {
+                            "type": "Text",
+                            "id": "time0",
+                            "text": "${payload.dashboard.clocks[0].time}",
+                            "fontSize": "52dp",
+                            "fontWeight": "800",
+                            "color": "@textPrimary"
+                          },
+                          {
+                            "type": "Text",
+                            "id": "meta0",
+                            "text": "  ${payload.dashboard.clocks[0].label}  •  ${payload.dashboard.clocks[0].date}",
+                            "fontSize": "20dp",
+                            "fontWeight": "600",
+                            "color": "@textMuted",
+                            "paddingLeft": "12dp"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Container",
+                        "direction": "row",
+                        "alignItems": "baseline",
+                        "items": [
+                          {
+                            "type": "Text",
+                            "id": "time1",
+                            "text": "${payload.dashboard.clocks[1].time}",
+                            "fontSize": "52dp",
+                            "fontWeight": "800",
+                            "color": "@textPrimary"
+                          },
+                          {
+                            "type": "Text",
+                            "id": "meta1",
+                            "text": "  ${payload.dashboard.clocks[1].label}  •  ${payload.dashboard.clocks[1].date}",
+                            "fontSize": "20dp",
+                            "fontWeight": "600",
+                            "color": "@textMuted",
+                            "paddingLeft": "12dp"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Container",
+                    "alignItems": "end",
+                    "items": [
+                      {
+                        "type": "Container",
+                        "direction": "row",
+                        "alignItems": "center",
+                        "items": [
+                          {
+                            "type": "Text",
+                            "id": "weatherIcon",
+                            "text": "${payload.dashboard.weather.icon}",
+                            "fontSize": "40dp",
+                            "paddingRight": "10dp"
+                          },
+                          {
+                            "type": "Text",
+                            "id": "weatherTemp",
+                            "text": "${payload.dashboard.weather.temperature}",
+                            "fontSize": "44dp",
+                            "fontWeight": "800",
+                            "color": "@textPrimary"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Text",
+                        "id": "weatherCondition",
+                        "text": "${payload.dashboard.weather.condition}",
+                        "fontSize": "22dp",
+                        "fontWeight": "600",
+                        "color": "@textMuted",
+                        "textAlign": "right"
+                      },
+                      {
+                        "type": "Text",
+                        "id": "weatherLocation",
+                        "text": "${payload.dashboard.weather.location}",
+                        "fontSize": "18dp",
+                        "fontWeight": "500",
+                        "color": "@textMuted",
+                        "textAlign": "right",
+                        "paddingTop": "4dp"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

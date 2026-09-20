@@ -1,0 +1,39 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "home dashboard",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": [
+                        "close",
+                        "close it",
+                        "dismiss"
+                    ]
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": [
+                        "quit",
+                        "exit",
+                        "close the screen",
+                        "turn it off"
+                    ]
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.FallbackIntent",
+                    "samples": []
+                }
+            ],
+            "types": []
+        }
+    }
+}

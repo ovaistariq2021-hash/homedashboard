@@ -1,0 +1,30 @@
+{
+  "manifest": {
+    "publishingInformation": {
+      "locales": {
+        "en-US": {
+          "summary": "An ambient dashboard for your Echo Show: live dual-timezone clock, weather, and a rotating cinematic background.",
+          "examplePhrases": [
+            "Alexa open home dashboard"
+          ],
+          "name": "Home Dashboard",
+          "description": "Turns your Echo Show into an ambient dashboard: a live clock for two timezones, current weather, and a slowly rotating cinematic city background. Stays on screen until you say stop."
+        }
+      },
+      "isAvailableWorldwide": true,
+      "testingInstructions": "Say 'Alexa, open home dashboard' to launch. Say 'Alexa, stop' to close it.",
+      "category": "KNOWLEDGE_AND_TRIVIA",
+      "distributionCountries": []
+    },
+    "apis": {
+      "custom": {
+        "interfaces": [
+          {
+            "type": "ALEXA_PRESENTATION_APL"
+          }
+        ]
+      }
+    },
+    "manifestVersion": "1.0"
+  }
+}
