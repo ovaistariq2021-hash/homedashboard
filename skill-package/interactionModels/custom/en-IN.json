@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "night watch",
+            "invocationName": "vista panel",
             "intents": [
                 {
                     "name": "AMAZON.CancelIntent",
