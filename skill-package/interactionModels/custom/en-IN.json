@@ -1,7 +1,7 @@
 {
     "interactionModel": {
         "languageModel": {
-            "invocationName": "custom dashboard",
+            "invocationName": "night watch",
             "intents": [
                 {
                     "name": "AMAZON.CancelIntent",
