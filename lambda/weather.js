@@ -6,41 +6,29 @@ const LOCATION = {
     longitude: 74.26396
 };
 
-const WEATHER_CODES = {
-    0: { label: 'Clear sky', icon: '☀️' },
-    1: { label: 'Mostly clear', icon: '🌤️' },
-    2: { label: 'Partly cloudy', icon: '⛅' },
-    3: { label: 'Overcast', icon: '☁️' },
-    45: { label: 'Fog', icon: '🌫️' },
-    48: { label: 'Fog', icon: '🌫️' },
-    51: { label: 'Light drizzle', icon: '🌦️' },
-    53: { label: 'Drizzle', icon: '🌦️' },
-    55: { label: 'Dense drizzle', icon: '🌦️' },
-    61: { label: 'Light rain', icon: '🌧️' },
-    63: { label: 'Rain', icon: '🌧️' },
-    65: { label: 'Heavy rain', icon: '🌧️' },
-    66: { label: 'Freezing rain', icon: '🌧️' },
-    67: { label: 'Freezing rain', icon: '🌧️' },
-    71: { label: 'Light snow', icon: '🌨️' },
-    73: { label: 'Snow', icon: '🌨️' },
-    75: { label: 'Heavy snow', icon: '🌨️' },
-    77: { label: 'Snow grains', icon: '🌨️' },
-    80: { label: 'Rain showers', icon: '🌦️' },
-    81: { label: 'Rain showers', icon: '🌦️' },
-    82: { label: 'Violent showers', icon: '⛈️' },
-    85: { label: 'Snow showers', icon: '🌨️' },
-    86: { label: 'Snow showers', icon: '🌨️' },
-    95: { label: 'Thunderstorm', icon: '⛈️' },
-    96: { label: 'Thunderstorm', icon: '⛈️' },
-    99: { label: 'Thunderstorm', icon: '⛈️' }
-};
+function iconForConditionId(id) {
+    if (id >= 200 && id < 300) return { icon: '⛈️' };
+    if (id >= 300 && id < 400) return { icon: '🌦️' };
+    if (id >= 500 && id < 600) return { icon: '🌧️' };
+    if (id >= 600 && id < 700) return { icon: '🌨️' };
+    if (id >= 700 && id < 800) return { icon: '🌫️' };
+    if (id === 800) return { icon: '☀️' };
+    if (id === 801) return { icon: '🌤️' };
+    if (id === 802) return { icon: '⛅' };
+    if (id >= 803) return { icon: '☁️' };
+    return { icon: '🌡️' };
+}
+
+function titleCase(str) {
+    return str.replace(/\b\w/g, (c) => c.toUpperCase());
+}
 
 const CACHE_TTL_MS = 60 * 60 * 1000; // 1 hour
 let cache = { data: null, fetchedAt: 0 };
 
 function apiGet(path) {
     return new Promise((resolve, reject) => {
-        https.get(`https://api.open-meteo.com${path}`, (res) => {
+        https.get(`https://api.openweathermap.org${path}`, (res) => {
             let body = '';
             res.on('data', (chunk) => { body += chunk; });
             res.on('end', () => {
@@ -51,7 +39,7 @@ function apiGet(path) {
                         reject(err);
                     }
                 } else {
-                    reject(new Error(`open-meteo request failed: ${res.statusCode} ${body}`));
+                    reject(new Error(`openweathermap request failed: ${res.statusCode} ${body}`));
                 }
             });
         }).on('error', reject);
@@ -65,20 +53,21 @@ async function getWeather() {
     }
 
     const data = await apiGet(
-        `/v1/forecast?latitude=${LOCATION.latitude}&longitude=${LOCATION.longitude}`
-        + `&current=temperature_2m,weather_code,relative_humidity_2m,wind_speed_10m&timezone=Asia%2FKolkata`
+        `/data/2.5/weather?lat=${LOCATION.latitude}&lon=${LOCATION.longitude}`
+        + `&appid=${process.env.OPENWEATHER_API_KEY}&units=metric`
     );
 
-    const current = data.current || {};
-    const codeInfo = WEATHER_CODES[current.weather_code] || { label: 'Unknown', icon: '🌡️' };
+    const conditionId = data.weather && data.weather[0] ? data.weather[0].id : null;
+    const description = data.weather && data.weather[0] ? data.weather[0].description : 'Unknown';
+    const { icon } = iconForConditionId(conditionId);
 
     const result = {
         location: LOCATION.name,
-        temperature: Math.round(current.temperature_2m),
-        condition: codeInfo.label,
-        icon: codeInfo.icon,
-        humidity: current.relative_humidity_2m,
-        windSpeed: Math.round(current.wind_speed_10m)
+        temperature: Math.round(data.main.temp),
+        condition: titleCase(description),
+        icon,
+        humidity: data.main.humidity,
+        windSpeed: Math.round(data.wind.speed * 3.6) // m/s -> km/h
     };
 
     cache = { data: result, fetchedAt: now };
