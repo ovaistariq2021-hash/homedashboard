@@ -27,6 +27,16 @@ app.get('/', (req, res) => {
     res.status(200).send('Home Dashboard skill endpoint is running.');
 });
 
+app.get('/debug', async (req, res) => {
+    const { buildDashboard } = require('./dashboard');
+    try {
+        const { datasource } = await buildDashboard();
+        res.json({ publicBaseUrl: process.env.PUBLIC_BASE_URL || null, datasource });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
     console.log(`Home Dashboard skill listening on port ${port}`);

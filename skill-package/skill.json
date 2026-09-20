@@ -5,19 +5,35 @@
         "en-US": {
           "summary": "An ambient dashboard for your Echo Show: live dual-timezone clock, weather, and a rotating cinematic background.",
           "examplePhrases": [
-            "Alexa open home dashboard"
+            "Alexa open home dashboard",
+            "Alexa launch home dashboard",
+            "Alexa start home dashboard"
           ],
           "name": "Home Dashboard",
-          "description": "Turns your Echo Show into an ambient dashboard: a live clock for two timezones, current weather, and a slowly rotating cinematic city background. Stays on screen until you say stop."
+          "description": "Turns your Echo Show into an ambient dashboard: a live clock for two timezones, current weather, and a slowly rotating cinematic city background. Stays on screen until you say stop, quit, close, or exit."
+        },
+        "en-IN": {
+          "summary": "An ambient dashboard for your Echo Show: live dual-timezone clock, weather, and a rotating cinematic background.",
+          "examplePhrases": [
+            "Alexa open home dashboard",
+            "Alexa launch home dashboard",
+            "Alexa start home dashboard"
+          ],
+          "name": "Home Dashboard",
+          "description": "Turns your Echo Show into an ambient dashboard: a live clock for two timezones, current weather, and a slowly rotating cinematic city background. Stays on screen until you say stop, quit, close, or exit."
         }
       },
       "isAvailableWorldwide": true,
-      "testingInstructions": "Say 'Alexa, open home dashboard' to launch. Say 'Alexa, stop' to close it.",
+      "testingInstructions": "Say 'Alexa, open home dashboard' to launch. Say 'Alexa, stop', 'quit', 'close', or 'exit' to close it.",
       "category": "KNOWLEDGE_AND_TRIVIA",
       "distributionCountries": []
     },
     "apis": {
       "custom": {
+        "endpoint": {
+          "sslCertificateType": "Wildcard",
+          "uri": "https://homedashboard-3ozx.onrender.com/"
+        },
         "interfaces": [
           {
             "type": "ALEXA_PRESENTATION_APL"
