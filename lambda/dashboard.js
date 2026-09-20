@@ -6,7 +6,10 @@ const CLOCK_TICK_MS = 15 * 1000;
 async function buildDashboard() {
     const baseUrl = process.env.PUBLIC_BASE_URL;
     const [weather, clocks] = await Promise.all([
-        getWeather().catch(() => null),
+        getWeather().catch((err) => {
+            console.error('Weather fetch failed:', err.stack || err);
+            return null;
+        }),
         Promise.resolve(getClocks())
     ]);
 
